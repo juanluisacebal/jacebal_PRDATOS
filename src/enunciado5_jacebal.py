@@ -49,5 +49,21 @@ def merge_datasets(df1: DataFrame, df2: DataFrame) -> DataFrame:
     Returns:
         DataFrame: DataFrame con la union.
     """
-    df_m = pd.merge(df1, df2, on='state', how='left')
-    return df_m
+    df = pd.merge(df1, df2, on='state', how='left')
+    return df
+
+
+def calculate_relative_values(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Valores relativos permisos y armas por cada 100000 hab.
+
+    Args:
+        df (DataFrame): Df con datos de armas y población.
+
+    Returns:
+        DataFrame: DataFrame con valores relativos añadidos.
+    """
+    df['permit_perc'] = (df['permit'] / df['pop_2014']) * 100000
+    df['handgun_perc'] = (df['handgun'] / df['pop_2014']) * 100000
+    df['long_gun_perc'] = (df['long_gun'] / df['pop_2014']) * 100000
+    return df

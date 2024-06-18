@@ -3,6 +3,7 @@ import src.enunciado2_jacebal as e2jla
 import src.enunciado3_jacebal as e3jla
 import src.enunciado4_jacebal as e4jla
 import src.enunciado5_jacebal as e5jla
+import src.enunciado6_jacebal as e6jla
 
 
 def main():
@@ -43,7 +44,19 @@ def main():
     # df2.info()
     df = e5jla.clean_states(df)
     df.info()
-    df_m=e5jla.merge_datasets(df,df2)
+    df_m = e5jla.merge_datasets(df, df2)
     print(df_m)
+    df_m = e5jla.calculate_relative_values(df_m)
+    print(df_m.sort_values(by=['permit_perc'], ascending=False).head(), '\n\n')
+    # Enunciado 5.5
+    print(df_m['permit_perc'].mean())
+    print(df_m[df_m['state'] == 'Kentucky'])
+    df_m.loc[df_m['state'] == 'Kentucky', 'permit_perc'] = round(df_m['permit_perc'].mean(), 2)
+    print(df_m[df_m['state'] == 'Kentucky'])
+    print(df_m['permit_perc'].mean())
+
+    e6jla.hacer_todo_mapas(df_m)
+
+
 if __name__ == '__main__':
     main()
