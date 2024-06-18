@@ -1,3 +1,4 @@
+import os
 import src.enunciado1_jacebal as e1jla
 import src.enunciado2_jacebal as e2jla
 import src.enunciado3_jacebal as e3jla
@@ -7,9 +8,13 @@ import src.enunciado6_jacebal as e6jla
 
 
 def main():
-    # URL del archivo CSV
-    url = 'data/nics-firearm-background-checks.csv'
-    df = e1jla.read_csv(url)
+    # URL del archivo CSV con ruta relativa
+    # en el momento de la ejecucion
+    # para poder usar como paquete python
+    directorio_actual = os.path.dirname(os.path.abspath(__file__))
+    archivo_datos = os.path.join(directorio_actual, 'data', 'nics-firearm-background-checks.csv')
+
+    df = e1jla.read_csv(archivo_datos)
     df.hist()
     df = e1jla.clean_csv(df)
     df = e1jla.rename_col(df)
@@ -40,7 +45,8 @@ def main():
     df.info()
     df = e5jla.groupby_state(df)
     df.info()
-    df2 = e1jla.read_csv('data/us-state-populations.csv')
+    archivo_pop = os.path.join(directorio_actual, 'data', 'us-state-populations.csv')
+    df2 = e1jla.read_csv(archivo_pop)
     # df2.info()
     df = e5jla.clean_states(df)
     df.info()
