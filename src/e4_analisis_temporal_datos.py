@@ -31,5 +31,3 @@ def time_evolution(df: pd.DataFrame):
 
 if __name__ == '__main__':
     print("enunciado 4")
-    # url = './../data/nics-firearm-background-checks.csv'
-    # time_evolution(e1jla.read_csv(url))

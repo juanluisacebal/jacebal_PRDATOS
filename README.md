@@ -14,36 +14,52 @@ El proyecto está organizado de la siguiente manera:
 ### `main.py`
 
 Archivo y funcion principal del proyecto que ejecuta todos los modulos:
-- `main()`
+
+- `main()`: Llama a cada una de las funciones disponibles en el directorio src
 
 ### Directorio `src/`: Contiene todos los scripts Python para manejar, procesar y visualizar los datos.
 
 - `e1_lectura_limpieza_datos.py`:
-    - `leer_datos()`: Carga datos desde un archivo CSV.
-    - `limpiar_datos()`: Limpia y prepara los datos para análisis.
+    - `read_csv()`: Carga datos desde un archivo CSV.
+    - `clean_csv()`: Limpia y prepara los datos para análisis.
+    - rename_col(): Cambia el nombre de la columna longgun(si existe) por long_gun.
 
 - `e2_procesamiento_datos.py`:
-    - `procesar_datos()`: .
+    - `breakdown_date()`: Divide en 2 columnas la fecha, teniendo como resultado year y month.
+    - `erase_month()`: Elimina el mes (month) de nuestro dataframe.
 
 - `e3_agrupamiento_datos.py`:
-    - `agrupar_datos()`: Agrupa los datos por estado y año para analisis detallado.
+    - `groupby_state_and_year()`: Agrupa los datos por estado y año.
+    - `print_biggest_handguns()`: Imprime por consola el estado y el año con mas ventas de pistolas.
+    - `print_biggest_longguns()`: Imprime por consola el estado y el año con mas ventas de armas largas.
 
 - `e4_analisis_temporal_datos.py`:
-    - `analizar_tendencias_temporales()`: Analiza tendencias de datos a lo largo del tiempo.
+    - `time_evolution()`: Analiza tendencias de datos de armas (largas y cortas) y permisos a lo largo del tiempo.
 
 - `e5_analisis_datos_estados.py`:
-    - `analizar_datos_estados()`: Realiza un análisis específico por estado, utilizando cálculos estadísticos.
+    - `groupby_state()`: Realiza un agrupamiento de los datos temporales por estado.
+    - `clean_states()`: Limpia (si existen) los estaddos asociados de los que el dataset de poblacion no tiene datos de
+      poblacion.
+    - `merge_datasets()`:Fusiona el dataset de armas con el dataset de poblacion.
+    - `calculate_relative_values()`: Crea 3 nuevas metricas en el dataset de armas largas, cortas y permisos cada 100000
+      habitantes.
 
 - `e6_mapas_coropleticos.py`:
-    - `crear_mapa_coropletico()`: Genera mapas coropléticos para visualizar los datos geográficamente.
+    - `crear_capa_coropletica()`: Genera capas coropléticas para visualizar los datos geográficamente y genera el mapa
+      en forma de imagen PNG para cada capa.
+    - `crear_y_guardar_mapa_html()`: Recibe una lista de capas y genera un mapa html.
+    - `hacer_todo_mapas()`: Crea 3 capas llamando a crear_capa_coropletica y genera un mapa llamando a
+      crear_y_guardar_mapa_html.
 
-- `__init__.py`:
+- `__init__.py`: Definicion como modulo de carpeta src
 
-- `test/`:
+### Directorio `test/`:
 - `e1_test()`:
 
+### Directorio `data/`:
 
-- `data/`: Directorio para almacenar los conjuntos de datos
+Directorio para almacenar los conjuntos de datos
+
 
 ## Instalacion de dependencias
 
@@ -77,4 +93,6 @@ pip3 install -r requirements.txt
 pip3 install -e .
 ```
 
-Estando dentro de la carpeta del proyecto este ultimo comando, y el de las dependencais
+Estando dentro de la carpeta del proyecto este ultimo comando, y el de las dependencias
+
+
