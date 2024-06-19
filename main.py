@@ -16,8 +16,6 @@ def main():
     archivo_datos = os.path.join(directorio_actual, 'data', 'nics-firearm-background-checks.csv')
 
     df = read_csv(archivo_datos)
-    representation = "pd.DataFrame(" + str(df.head(20).to_dict(orient='list')) + ")"
-    print(representation)
 
     df.hist()
     df = clean_csv(df)
@@ -60,7 +58,6 @@ def main():
     print(df_m.sort_values(by=['permit_perc'], ascending=False).head(), '\n\n')
     df_m = arreglar_Kentucky(df_m)
     hacer_todo_mapas(df_m)
-
 
 if __name__ == '__main__':
     main()

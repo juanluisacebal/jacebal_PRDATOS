@@ -1,16 +1,19 @@
 import os
 import unittest
 
-import numpy as np
+import folium
 import pandas as pd
-
 from main import main
 from src.e1_lectura_limpieza_datos import read_csv, clean_csv, rename_col
 from src.e2_procesamiento_datos import breakdown_date, erase_month
 from src.e3_agrupamiento_datos import print_biggest_handguns, print_biggest_longguns, groupby_state_and_year
+from src.e4_analisis_temporal_datos import time_evolution
+from src.e5_analisis_datos_estados import arreglar_Kentucky, clean_states, calculate_relative_values, merge_datasets, \
+    groupby_state
+from src.e6_mapas_coropleticos import crear_capa_coropletica
 
 
-class Test_main(unittest.TestCase):
+class Test_Main(unittest.TestCase):
     def test_main(self):
         """ Verifica que main se ejecuta sin dar excepciones """
         try:
@@ -18,12 +21,11 @@ class Test_main(unittest.TestCase):
         except Exception as e:
             self.fail(f"main() raised an exception {e}")
 
-    # pd.DataFrame({'month': ['2020-03', '2020-03', '2020-03', '2020-03', '2020-03', '2020-03', '2020-03', '2020-03', '2020-03', '2020-03', '2020-03', '2020-03', '2020-03', '2020-03', '2020-03', '2020-03', '2020-03', '2020-03', '2020-03', '2020-03'], 'state': ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana'], 'permit': [31205.0, 143.0, 5685.0, 2424.0, 27792.0, 5654.0, 4852.0, 227.0, 474.0, 16713.0, 16741.0, 0.0, 1842.0, 8647.0, 39780.0, 585.0, 9606.0, 898.0, 2394.0, 1620.0], 'permit_recheck': [606.0, 4.0, 958.0, 673.0, 0.0, 0.0, 335.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 3.0, 541682.0, 53551.0, 8668.0, 4.0, 182977.0, 220.0], 'handgun': [34897.0, 4657.0, 46377.0, 15304.0, 81543.0, 43322.0, 9196.0, 4936.0, 148.0, 117900.0, 44107.0, 170.0, 0.0, 11611.0, 44112.0, 45695.0, 378.0, 16715.0, 28268.0, 25038.0], 'long_gun': [17850.0, 3819.0, 19346.0, 8968.0, 48616.0, 22756.0, 3290.0, 2323.0, 5.0, 38365.0, 16807.0, 80.0, 0.0, 8193.0, 17127.0, 22724.0, 5778.0, 8964.0, 15315.0, 10278.0], 'other': [1583.0, 487.0, 2433.0, 600.0, 5041.0, 2086.0, 5421.0, 190.0, 0.0, 5017.0, 1245.0, 11.0, 0.0, 716.0, 0.0, 2613.0, 91.0, 889.0, 937.0, 1258.0], 'multiple': [1744, 386, 4846, 885, 0, 3242, 0, 196, 1, 6073, 2305, 9, 0, 714, 2408, 2311, 13, 952, 1615, 1342], 'admin': [0.0, 0.0, 0.0, 4.0, 0.0, 0.0, 9.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 18.0, 0.0, 0.0, 2.0, 0.0], 'prepawn_handgun': [36.0, 0.0, 18.0, 27.0, 0.0, 0.0, 0.0, 3.0, 0.0, 26.0, 31.0, 0.0, 0.0, 6.0, 0.0, 12.0, 0.0, 8.0, 32.0, 16.0], 'prepawn_long_gun': [23.0, 0.0, 19.0, 25.0, 0.0, 0.0, 0.0, 0.0, 0.0, 8.0, 18.0, 0.0, 0.0, 6.0, 0.0, 9.0, 0.0, 8.0, 27.0, 21.0], 'prepawn_other': [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 2.0, 2.0], 'redemption_handgun': [3035.0, 210.0, 2011.0, 1301.0, 957.0, 0.0, 0.0, 16.0, 0.0, 4912.0, 2011.0, 1.0, 0.0, 507.0, 0.0, 817.0, 3.0, 832.0, 2145.0, 1319.0], 'redemption_long_gun': [1564.0, 177.0, 908.0, 1407.0, 539.0, 0.0, 0.0, 14.0, 0.0, 1602.0, 1292.0, 0.0, 0.0, 520.0, 0.0, 492.0, 61.0, 444.0, 1520.0, 845.0], 'redemption_other': [19.0, 0.0, 9.0, 5.0, 9.0, 0.0, 0.0, 0.0, 0.0, 13.0, 10.0, 0.0, 0.0, 0.0, 0.0, 16.0, 0.0, 7.0, 5.0, 12.0], 'returned_handgun': [13.0, 13.0, 110.0, 0.0, 0.0, 206.0, 0.0, 71.0, 1.0, 853.0, 3.0, 0.0, 1.0, 40.0, 0.0, 31.0, 43.0, 52.0, 9.0, 0.0], 'returned_long_gun': [0.0, 16.0, 12.0, 0.0, 0.0, 36.0, 0.0, 0.0, 0.0, 93.0, 0.0, 0.0, 0.0, 11.0, 0.0, 3.0, 9.0, 17.0, 5.0, 0.0], 'returned_other': [0.0, 0.0, 2.0, 0.0, 0.0, 3.0, 0.0, 2.0, 63.0, 5.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'rentals_handgun': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'rentals_long_gun': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'private_sale_handgun': [42.0, 14.0, 21.0, 11.0, 0.0, 0.0, 0.0, 97.0, 0.0, 316.0, 19.0, 0.0, 0.0, 6.0, 0.0, 60.0, 0.0, 17.0, 32.0, 18.0], 'private_sale_long_gun': [23.0, 13.0, 11.0, 10.0, 0.0, 0.0, 0.0, 43.0, 0.0, 184.0, 7.0, 0.0, 0.0, 5.0, 0.0, 35.0, 1.0, 5.0, 16.0, 17.0], 'private_sale_other': [8.0, 0.0, 5.0, 3.0, 0.0, 0.0, 0.0, 4.0, 0.0, 37.0, 1.0, 0.0, 0.0, 2.0, 0.0, 40.0, 1.0, 2.0, 1.0, 9.0], 'return_to_seller_handgun': [2.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 54.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0], 'return_to_seller_long_gun': [2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 60.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 1.0, 2.0, 0.0], 'return_to_seller_other': [0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0], 'totals': [92652, 9939, 82771, 31651, 164497, 77305, 23103, 8123, 692, 192234, 84601, 271, 1843, 30989, 645109, 129016, 24652, 29816, 235305, 42015]})
-
 
 class TestLecturaLimpiezaDatos(unittest.TestCase):
     @classmethod
-    def setUpClass(cls):
+    def setUp(cls):
+        """ Uso setUp para algunos casos de prueba """
         print("Loading dataset")
         cls._df = pd.read_csv("../data/nics-firearm-background-checks.csv")
         cls._df2 = pd.read_csv("../data/us-state-populations.csv")
@@ -49,6 +51,7 @@ class TestLecturaLimpiezaDatos(unittest.TestCase):
         self.assertFalse(self._df2.empty)
 
     def test_clean_csv(self):
+        """ Verifica que limpia bien el csv y elimina las columnas que debe """
         df = pd.DataFrame({
             'month': ['2010-01'], 'state': ['Texas'], 'permit': [0], 'handgun': [0],
             'long_gun': [0], 'other': [0]
@@ -63,6 +66,7 @@ class TestLecturaLimpiezaDatos(unittest.TestCase):
         self.assertNotIn(not columnas, df_c.columns)
 
     def test_rename_col(self):
+        """ Verifica que cambia bien el nombre de la columna longgun cuando existe """
         df = pd.DataFrame({
             'longgun': [123], 'month': [12]
         })
@@ -71,7 +75,7 @@ class TestLecturaLimpiezaDatos(unittest.TestCase):
         })
         df = rename_col(df)
         df2 = rename_col(df2)
-        df_r = rename_col(self._df)
+
         self.assertIn('long_gun', df.columns)
         self.assertNotIn('longgun', df.columns)
 
@@ -90,6 +94,7 @@ class TestProcesamientoDatos(unittest.TestCase):
         cls._df2 = pd.read_csv("../data/us-state-populations.csv")
 
     def test_breakdown_date(self):
+        """ Verifica que separa bien year y month """
         df = pd.DataFrame({
             'month': ['2020-01']
         })
@@ -106,6 +111,7 @@ class TestProcesamientoDatos(unittest.TestCase):
         self.assertTrue((df_b['month'] == '09').any())
 
     def test_erase_month(self):
+        """ Verifica que elimina month del dataframe """
         df = pd.DataFrame({
             'month': ['01'], 'year': ['2020']
         })
@@ -115,6 +121,7 @@ class TestProcesamientoDatos(unittest.TestCase):
 
 class TestAgrupamientoDatos(unittest.TestCase):
     def test_groupby_state_and_year(self):
+        """ Verifica que agrupa por state y year """
         df = pd.DataFrame([
             {'year': '2012', 'state': 'Florida', 'permit': 30, 'handgun': 26750, 'long_gun': 110},
             {'year': '2013', 'state': 'Texas', 'permit': 40, 'handgun': 4560, 'long_gun': 4120},
@@ -123,7 +130,7 @@ class TestAgrupamientoDatos(unittest.TestCase):
             {'year': '2013', 'state': 'Texas', 'permit': 40, 'handgun': 4560, 'long_gun': 4120},
             {'year': '2013', 'state': 'Texas', 'permit': 40, 'handgun': 4560, 'long_gun': 4120},
         ])
-        df = groupby_state_and_year(df)
+        df_agrupado = groupby_state_and_year(df)
         esperado = pd.DataFrame({
             'state': ['Florida', 'Texas'],
             'year': ['2012', '2013'],
@@ -131,16 +138,21 @@ class TestAgrupamientoDatos(unittest.TestCase):
             'handgun': [26750, 22800],
             'long_gun': [110, 20600]
         })
-        print(df)
-        texas = df[(df['state'] == 'Texas') & (df['year'] == '2013')]['handgun']
-        texas_handgun = df[(df['state'] == 'Texas') & (df['year'] == '2013')]['handgun'].sum()
-        print(texas)
-        print(texas_handgun)
-        pass
-        # self.assertEqual(texas_handgun, 22800)
-        # self.assertEquals(df, esperado)
+        print(esperado)
+
+        texas_2013 = df_agrupado[(df_agrupado['state'] == 'Texas') & (df_agrupado['year'] == 2013)]
+        florida_2012 = df_agrupado[(df_agrupado['state'] == 'Florida') & (df_agrupado['year'] == 2012)]
+
+        self.assertEqual(texas_2013['handgun'].iloc[0], 22800)
+        self.assertEqual(texas_2013['long_gun'].iloc[0], 20600)
+        self.assertEqual(texas_2013['permit'].iloc[0], 200)
+
+        self.assertEqual(florida_2012['handgun'].iloc[0], 26750)
+        self.assertEqual(florida_2012['long_gun'].iloc[0], 110)
+        self.assertEqual(florida_2012['permit'].iloc[0], 30)
 
     def test_print_biggest_handguns(self):
+        """ Verifica que el mensaje salido en la terminal es el esperado para pistolas"""
         df = pd.DataFrame([
             {'year': '2012', 'state': 'Florida', 'permit': 30, 'handgun': 26750, 'long_gun': 110},
             {'year': '2013', 'state': 'Texas', 'permit': 40, 'handgun': 4560, 'long_gun': 4120}
@@ -150,6 +162,7 @@ class TestAgrupamientoDatos(unittest.TestCase):
                          print_biggest_handguns(df))
 
     def test_print_biggest_longguns(self):
+        """ Verifica que el mensaje salido en la terminal es el esperado para armas largas"""
         df = pd.DataFrame([
             {'year': '2012', 'state': 'Florida', 'permit': 30, 'handgun': 20, 'long_gun': 110},
             {'year': '2013', 'state': 'Texas', 'permit': 40, 'handgun': 30, 'long_gun': 4120}
@@ -161,37 +174,200 @@ class TestAgrupamientoDatos(unittest.TestCase):
 
 class TestAnalisisTemporalDatos(unittest.TestCase):
     def test_time_evolution(self):
-        pass
+        """ Verifica que el df utilizado en el grafico es el esperado y ha sido agrupado correctamente teniendo en
+            cuenta que time_evolution devuelve el df utilizado para hacer el grafico.
+        """
+        datos = {
+            'year': [2020, 2020, 2021, 2021],
+            'permit': [100, 150, 200, 250],
+            'handgun': [60, 40, 80, 120],
+            'long_gun': [70, 30, 50, 150]
+        }
+        df = pd.DataFrame(datos)
+        df_procesado = time_evolution(df)
+        esperado = pd.DataFrame({
+            'year': [2020, 2021],
+            'permit': [250, 450],
+            'handgun': [100, 200],
+            'long_gun': [100, 200]})
+        pd.testing.assert_frame_equal(df_procesado, esperado)
 
 
 class TestAnalisisDatosEstados(unittest.TestCase):
     def test_groupby_state(self):
-        pass
+        """ Verifica que agrupa correctamente por estado"""
+        df = pd.DataFrame({
+            'state': ['Texas', 'Texas', 'Florida', 'Florida'],
+            'permit': [20, 30, 10, 15],
+            'handgun': [100, 150, 50, 60],
+            'long_gun': [200, 300, 80, 90]
+        })
+        df_resultado = groupby_state(df)
+        df_esperado = pd.DataFrame({
+            'state': ['Florida', 'Texas'],
+            'permit': [25, 50],
+            'handgun': [110, 250],
+            'long_gun': [170, 500]
+        })
+        pd.testing.assert_frame_equal(df_resultado, df_esperado)
 
     def test_clean_states(self):
-        pass
+        """ Verifica que limpia bien los estados sin datos de poblacion eliminandolos.
+            Estos son Guam, Mariana Islands, Puerto Rico y Virgin Islands
+        """
+        df = pd.DataFrame({
+            'state': ['Texas', 'Florida', 'Guam', 'Mariana Islands', 'Puerto Rico', 'Virgin Islands']
+        })
+        df_resultado = clean_states(df)
+        df_esperado = pd.DataFrame({
+            'state': ['Texas', 'Florida']
+        })
+        pd.testing.assert_frame_equal(df_resultado, df_esperado)
 
     def test_merge_datasets(self):
-        pass
+        """ Verifica que fusiona correctamente los dataset"""
+        df_armas = pd.DataFrame({
+            'state': ['Texas', 'Florida'],
+            'permit': [20, 10]
+        })
+        df_poblacion = pd.DataFrame({
+            'state': ['Texas', 'Florida'],
+            'pop_2014': [1000, 500]
+        })
+        df_resultado = merge_datasets(df_armas, df_poblacion)
+        df_esperado = pd.DataFrame({
+            'state': ['Texas', 'Florida'],
+            'permit': [20, 10],
+            'pop_2014': [1000, 500]
+        })
+        pd.testing.assert_frame_equal(df_resultado, df_esperado)
 
     def test_calculate_relative_values(self):
-        pass
+        """ Verifica que calcula correctamente la tasa por caada 1000000 habitantes."""
+        df = pd.DataFrame({
+            'state': ['Texas', 'Florida'],
+            'permit': [200, 100],
+            'handgun': [1000, 500],
+            'long_gun': [800, 400],
+            'pop_2014': [1000000, 500000]
+        })
+        df_resultado = calculate_relative_values(df)
+        df_esperado = pd.DataFrame({
+            'state': ['Texas', 'Florida'],
+            'permit': [200, 100],
+            'handgun': [1000, 500],
+            'long_gun': [800, 400],
+            'pop_2014': [1000000, 500000],
+            'permit_perc': [20.0, 20.0],
+            'handgun_perc': [100.0, 100.0],
+            'long_gun_perc': [80.0, 80.0]
+        })
+        pd.testing.assert_frame_equal(df_resultado, df_esperado)
 
     def test_arreglar_Kentucky(self):
-        pass
-
+        """ Verifica que sustituye correctamente en Kentucky su permit_perc por la media del dataset"""
+        df = pd.DataFrame({
+            'state': ['Kentucky', 'Florida'],
+            'permit_perc': [200.0, 100.0]
+        })
+        df_resultado = arreglar_Kentucky(df)
+        df_esperado = pd.DataFrame({
+            'state': ['Kentucky', 'Florida'],
+            'permit_perc': [150.0, 100.0]
+        })
+        pd.testing.assert_frame_equal(df_resultado, df_esperado)
 
 class TestMapasCoropleticos(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.df = pd.DataFrame({
+            'code': ['TX', 'CA'],
+            'permit_perc': [1000, 1500],
+            'handgun_perc': [2000, 3000],
+            'long_gun_perc': [1500, 2500]
+        })
+        cls.geojson_url = "https://raw.githubusercontent.com/python-visualization/folium/main/examples/data/us-states.json"
+
     def test_crear_capa_coropletica(self):
-        pass
+        # Probar la creación de una capa coroplética
+        capa = crear_capa_coropletica(
+            df=self.df,
+            columna='permit_perc',
+            state_code='code',
+            ruta_geojson=self.geojson_url,
+            titulo='Test Map',
+            color='OrRd',
+            nombre='Test Layer'
+        )
+        self.assertIsInstance(capa, folium.Choropleth)
 
-    def test_crear_y_guardar_mapa_html(self):
-        pass
 
-    def test_hacer_todo_mapas(self):
-        pass
+class TestProcesamientoDatosCompleto(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        """ Hace todas las transformaciones que hace main()"""
+        # Cargo datos de los CSV
+        cls.df = pd.read_csv("../data/nics-firearm-background-checks.csv")
+        cls.df_pop = pd.read_csv("../data/us-state-populations.csv")
+
+        # Hago todas las modificaciones del df en main.py
+        cls.df = clean_csv(cls.df)
+        cls.df = rename_col(cls.df)
+        cls.df = breakdown_date(cls.df)
+        cls.df = erase_month(cls.df)
+        cls.df = groupby_state_and_year(cls.df)
+        cls.df = groupby_state(cls.df)
+        cls.df = clean_states(cls.df)
+
+        # merge con df_pop tal y como esta en main.py
+        cls.df_fusion = merge_datasets(cls.df, cls.df_pop)
+        cls.df_fusion = calculate_relative_values(cls.df_fusion)
+        cls.df_fusion = arreglar_Kentucky(cls.df_fusion)
+
+    def test_dataframe_final(self):
+        """ Verifica que algunos datos coinciden con lo esperado"""
+        self.assertFalse(self.df_fusion.empty)
+        self.assertIsNotNone(self.df_fusion)
+        # Comparo unos registros
+        # Usando esto en main, he obtenido la cabecera de df_m
+        # lo dejo aqui para entender la logica de la prueba:
+        # representation = "pd.DataFrame(" + str(df_m.head(10).to_dict(orient='list')) + ")"
+        # print (representation)
+        # y he copiado la cadena resultante para hacer las pruebas:
+        df_m_head = pd.DataFrame({'state': ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado',
+                                            'Connecticut', 'Delaware', 'District of Columbia', 'Florida'],
+                                  'permit': [1831707.0, 20022.0, 898033.0, 619978.0, 7711985.0, 654345.0, 1787517.0,
+                                             34035.0,
+                                             8887.0, 1634210.0],
+                                  'handgun': [2577822.0, 518066.0, 2208229.0, 1151534.0, 7060424.0, 3106384.0,
+                                              1036570.0, 262124.0,
+                                              7408.0, 7520891.0],
+                                  'long_gun': [2905635.0, 652905.0, 1727865.0, 1857047.0, 6738900.0, 3135015.0,
+                                               700088.0, 289063.0,
+                                               707.0, 4468507.0],
+                                  'code': ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL'],
+                                  'pop_2014': [4849377, 736732, 6731484, 2966369, 38802500, 5355866, 3596677, 935614,
+                                               658893,
+                                               19893297],
+                                  'permit_perc': [37772.00658971245, 2717.6775272419277, 13340.787855991337,
+                                                  20900.23189967263,
+                                                  19874.969396301785, 12217.351965116379, 49699.12505348687,
+                                                  3637.7181187968545,
+                                                  1348.7774190953614, 8214.877604250316],
+                                  'handgun_perc': [53157.79738304529, 70319.46488003779, 32804.49006489505,
+                                                   38819.647859049226,
+                                                   18195.796662586174, 57999.6586919837, 28820.213769543385,
+                                                   28016.254566519954,
+                                                   1124.3100169526767, 37806.156515935996],
+                                  'long_gun_perc': [59917.69664433184, 88621.77834002052, 25668.41130425327,
+                                                    62603.37132703315,
+                                                    17367.179949745507, 58534.23143894937, 19464.856032387674,
+                                                    30895.540254848685,
+                                                    107.30118547321037, 22462.375140732078]})
+
+        pd.testing.assert_frame_equal(self.df_fusion.head(10), df_m_head)
 
 
 if __name__ == '__main__':
+    import unittest
     unittest.main()
-    #unittest.TestSuite()
