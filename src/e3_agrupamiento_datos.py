@@ -6,8 +6,7 @@ def groupby_state_and_year(df: pd.DataFrame) -> pd.DataFrame:
     Agrupar por state y year, y suma valores de: permit, handgun y long_gun
 
     Args:
-        df (DataFrame): DataFrame que contenga
-        year, state, permit, handgun, y long_gun como columnas
+        df (DataFrame): DataFrame que contenga year, state, permit, handgun, y long_gun
 
     Returns:
         DataFrame: DataFrame agrupado por state y year y la suma de los valores.
@@ -31,6 +30,7 @@ def print_biggest_handguns(df: pd.DataFrame):
     print(f"El estado con más solicitudes de pistolas ha sido "
           f"{resultado.iloc[0]['state']}, el año {resultado.iloc[0]['year']} "
           f"con {resultado.iloc[0]['handgun']} solicitudes.")
+
 
 def print_biggest_longguns(df: pd.DataFrame):
     """

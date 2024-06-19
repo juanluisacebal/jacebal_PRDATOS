@@ -7,7 +7,6 @@ setup(
     name="jacebal_PRDATOS",
     version="0.0.1",
     packages=find_packages(),
-    #package_dir={"": "src"},
     scripts=['main.py'],
     package_data={
         '': ['data/*.csv'],

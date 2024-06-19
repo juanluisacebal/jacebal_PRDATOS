@@ -1,10 +1,11 @@
 import os
-import src.enunciado1_jacebal as e1jla
-import src.enunciado2_jacebal as e2jla
-import src.enunciado3_jacebal as e3jla
-import src.enunciado4_jacebal as e4jla
-import src.enunciado5_jacebal as e5jla
-import src.enunciado6_jacebal as e6jla
+
+import src.e1_lectura_limpieza_datos as e1jla
+import src.e2_procesamiento_datos as e2jla
+import src.e3_agrupamiento_datos as e3jla
+import src.e4_analisis_temporal_datos as e4jla
+import src.e5_analisis_datos_estados as e5jla
+import src.e6_mapas_coropleticos as e6jla
 
 
 def main():

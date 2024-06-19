@@ -1,6 +1,5 @@
-import pandas as pd
 import matplotlib.pyplot as plt
-import src.enunciado1_jacebal as e1jla
+import pandas as pd
 
 
 def time_evolution(df: pd.DataFrame):
@@ -32,5 +31,5 @@ def time_evolution(df: pd.DataFrame):
 
 if __name__ == '__main__':
     print("enunciado 4")
-    #url = './../data/nics-firearm-background-checks.csv'
-    #time_evolution(e1jla.read_csv(url))
+    # url = './../data/nics-firearm-background-checks.csv'
+    # time_evolution(e1jla.read_csv(url))

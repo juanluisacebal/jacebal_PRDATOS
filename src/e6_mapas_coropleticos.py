@@ -1,6 +1,7 @@
+import io
+
 import folium
 import pandas as pd
-import io
 from PIL import Image
 
 
