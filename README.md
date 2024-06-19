@@ -53,15 +53,28 @@ Archivo y funcion principal del proyecto que ejecuta todos los modulos:
     - `hacer_todo_mapas()`: Crea 3 capas llamando a crear_capa_coropletica y genera un mapa llamando a
       crear_y_guardar_mapa_html.
 
-- `__init__.py`: Definicion como modulo de carpeta src
+- `__init__.py`: Definicion como modulo de carpeta src (vacio).
 
-### Directorio `test/`:
-- `e1_test()`:
 
 ### Directorio `data/`:
 
-Directorio para almacenar los conjuntos de datos
+- Directorio para almacenar los conjuntos de datos para el analisis y visualizacion:
+    - `nics-firearm-background-checks.csv`: Datos de venta de armas y permisos (antecedentes) de armas.
+    - `us-state-populations.csv`: Datos de poblacion por estado de 2014.
 
+### Directorio `test/`:
+
+- Contiene pruebas unitarias para asegurar la calidad y correcto funcionamiento de las funciones y módulos del proyecto:
+    - ### `test.py`: Pruebas para ejecucion de todas las pruebas del paquete.
+    - `test_main.py`: Pruebas para la función principal del proyecto.
+    - `test_e1_lectura_limpieza_datos.py`: Pruebas para funciones de lectura y limpieza de datos.
+    - `test_e2_procesamiento_datos.py`: Pruebas para funciones de procesamiento de datos.
+    - `test_e3_agrupamiento_datos.py`: Pruebas para funciones de agrupamiento de datos.
+    - `test_e4_analisis_temporal_datos.py`: Pruebas para análisis temporal de los datos.
+    - `test_e5_analisis_datos_estados.py`: Pruebas para el análisis de datos por estado.
+    - `test_e6_mapas_coropleticos.py`: Pruebas para la creación de mapas coropléticos.
+    - `test_procesamiento_datos_completo.py`: Pruebas para el procesamiento completo de los datos.
+    - `__init__.py`: Definicion como modulo de carpeta test (vacio).
 
 ## Instalacion de dependencias
 

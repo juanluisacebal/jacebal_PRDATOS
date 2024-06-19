@@ -25,7 +25,7 @@ def crear_capa_coropletica(df: pd.DataFrame,
     Returns:
         folium.Choropleth:  capa para agregar al mapa despues.
     """
-    # Añadir el layer coroplético
+    # Añado el layer coroplético
     capa = folium.Choropleth(
         geo_data=ruta_geojson,
         name=nombre,
@@ -37,6 +37,8 @@ def crear_capa_coropletica(df: pd.DataFrame,
         line_opacity=.1,
         legend_name=titulo
     )
+    # pongo el layer en el mapa solo para generar el archivo png
+    # teniendo este mapa solo una capa
     mapa = folium.Map(location=[40, -95], zoom_start=4)
     capa.add_to(mapa)
     folium.LayerControl().add_to(mapa)
@@ -74,7 +76,7 @@ def hacer_todo_mapas(df: pd.DataFrame):
     capa1 = crear_capa_coropletica(df,
                                    'permit_perc',
                                    'code',
-                                   f"{url_geo}/us-states.json",
+                                   ruta_geojson,
                                    'Permisos de Armas cada 100.000 habitantes',
                                    'OrRd',
                                    'Permisos cada 100000hab')

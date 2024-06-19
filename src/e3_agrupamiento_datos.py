@@ -27,9 +27,9 @@ def print_biggest_handguns(df: pd.DataFrame):
         df (DataFrame): Df con las columnas state, year, y handgun.
     """
     resultado = df[df['handgun'] == df['handgun'].max()]
-    print(f"El estado con más solicitudes de pistolas ha sido "
+    print(f"El estado con más compras de pistolas ha sido "
           f"{resultado.iloc[0]['state']}, el año {resultado.iloc[0]['year']} "
-          f"con {resultado.iloc[0]['handgun']} solicitudes.")
+          f"con {resultado.iloc[0]['handgun']} compras.")
 
 
 def print_biggest_longguns(df: pd.DataFrame):
@@ -40,6 +40,6 @@ def print_biggest_longguns(df: pd.DataFrame):
         df (DataFrame): Df con las columnas state, year, y long_gun.
     """
     resultado = df[df['long_gun'] == df['long_gun'].max()]
-    print(f"El estado con más solicitudes de pistolas ha sido "
+    print(f"El estado con más compras de armas largas ha sido "
           f"{resultado.iloc[0]['state']}, el año {resultado.iloc[0]['year']} "
-          f"con {resultado.iloc[0]['long_gun']} solicitudes.")
+          f"con {resultado.iloc[0]['long_gun']} compras.")
