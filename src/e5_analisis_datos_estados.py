@@ -67,3 +67,23 @@ def calculate_relative_values(df: pd.DataFrame) -> pd.DataFrame:
     df['handgun_perc'] = (df['handgun'] / df['pop_2014']) * 100000
     df['long_gun_perc'] = (df['long_gun'] / df['pop_2014']) * 100000
     return df
+
+
+def arreglar_Kentucky(df: pd.DataFrame) -> pd.DataFrame:
+    """
+      Arregla valor Kentucky principalmente. Muestra la media,
+      sustituye la media en permit_perc en Kentucky, y luego muestra
+      los cambios y de nuevo la media
+
+      Args:
+          df (DataFrame): Df con datos de armas y población.
+
+      Returns:
+          DataFrame: DataFrame con valores modificados.
+    """
+    print(df['permit_perc'].mean())
+    print(df[df['state'] == 'Kentucky'])
+    df.loc[df['state'] == 'Kentucky', 'permit_perc'] = round(df['permit_perc'].mean(), 2)
+    print(df[df['state'] == 'Kentucky'])
+    print(df['permit_perc'].mean())
+    return df

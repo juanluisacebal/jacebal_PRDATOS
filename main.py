@@ -1,11 +1,11 @@
 import os
-
-import src.e1_lectura_limpieza_datos as e1jla
-import src.e2_procesamiento_datos as e2jla
-import src.e3_agrupamiento_datos as e3jla
-import src.e4_analisis_temporal_datos as e4jla
-import src.e5_analisis_datos_estados as e5jla
-import src.e6_mapas_coropleticos as e6jla
+from src.e1_lectura_limpieza_datos import read_csv, clean_csv, rename_col
+from src.e2_procesamiento_datos import breakdown_date, erase_month
+from src.e3_agrupamiento_datos import groupby_state_and_year, print_biggest_handguns, print_biggest_longguns
+from src.e4_analisis_temporal_datos import time_evolution
+from src.e5_analisis_datos_estados import groupby_state, clean_states, merge_datasets, calculate_relative_values, \
+    arreglar_Kentucky
+from src.e6_mapas_coropleticos import hacer_todo_mapas
 
 
 def main():
@@ -15,23 +15,26 @@ def main():
     directorio_actual = os.path.dirname(os.path.abspath(__file__))
     archivo_datos = os.path.join(directorio_actual, 'data', 'nics-firearm-background-checks.csv')
 
-    df = e1jla.read_csv(archivo_datos)
+    df = read_csv(archivo_datos)
+    representation = "pd.DataFrame(" + str(df.head(20).to_dict(orient='list')) + ")"
+    print(representation)
+
     df.hist()
-    df = e1jla.clean_csv(df)
-    df = e1jla.rename_col(df)
+    df = clean_csv(df)
+    df = rename_col(df)
     df.hist()
     # e4jla.time_evolution(df)
     print("parte 2\n")
     print(df.head(), "\n")
-    df = e2jla.breakdown_date(df)
-    df = e2jla.erase_month(df)
+    df = breakdown_date(df)
+    df = erase_month(df)
     print(df[df['year'] == 2020].head())
     # df.hist()
-    df = e3jla.groupby_state_and_year(df)
+    df = groupby_state_and_year(df)
     print(df[df['year'] == 2020].head())
-    e3jla.print_biggest_handguns(df)
-    e3jla.print_biggest_longguns(df)
-    e4jla.time_evolution(df)
+    print_biggest_handguns(df)
+    print_biggest_longguns(df)
+    time_evolution(df)
     print(df[['long_gun']].sum(axis=0))
     # Comentario del grafico:
     # muestra la evolucion a largo plazo de ventas
@@ -44,25 +47,19 @@ def main():
     # covid, las ventas y permisos fueron los de
     # 15 añoa antes
     df.info()
-    df = e5jla.groupby_state(df)
+    df = groupby_state(df)
     df.info()
     archivo_pop = os.path.join(directorio_actual, 'data', 'us-state-populations.csv')
-    df2 = e1jla.read_csv(archivo_pop)
+    df2 = read_csv(archivo_pop)
     # df2.info()
-    df = e5jla.clean_states(df)
+    df = clean_states(df)
     df.info()
-    df_m = e5jla.merge_datasets(df, df2)
+    df_m = merge_datasets(df, df2)
     print(df_m)
-    df_m = e5jla.calculate_relative_values(df_m)
+    df_m = calculate_relative_values(df_m)
     print(df_m.sort_values(by=['permit_perc'], ascending=False).head(), '\n\n')
-    # Enunciado 5.5
-    print(df_m['permit_perc'].mean())
-    print(df_m[df_m['state'] == 'Kentucky'])
-    df_m.loc[df_m['state'] == 'Kentucky', 'permit_perc'] = round(df_m['permit_perc'].mean(), 2)
-    print(df_m[df_m['state'] == 'Kentucky'])
-    print(df_m['permit_perc'].mean())
-
-    e6jla.hacer_todo_mapas(df_m)
+    df_m = arreglar_Kentucky(df_m)
+    hacer_todo_mapas(df_m)
 
 
 if __name__ == '__main__':

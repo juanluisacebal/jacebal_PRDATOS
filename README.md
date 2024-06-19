@@ -43,6 +43,8 @@ Archivo y funcion principal del proyecto que ejecuta todos los modulos:
     - `merge_datasets()`:Fusiona el dataset de armas con el dataset de poblacion.
     - `calculate_relative_values()`: Crea 3 nuevas metricas en el dataset de armas largas, cortas y permisos cada 100000
       habitantes.
+  - `arreglar_Kentucky()`:Arregla los datos sobre permisos de armas de Kentucky, ya que es outlier y puede generar
+    falsas conclusiones. Lo sustituye por la media del dataset.
 
 - `e6_mapas_coropleticos.py`:
     - `crear_capa_coropletica()`: Genera capas coropléticas para visualizar los datos geográficamente y genera el mapa
@@ -92,7 +94,21 @@ pip3 install -r requirements.txt
 ``` Instalar paquete jacebal_PRDATOS
 pip3 install -e .
 ```
-
 Estando dentro de la carpeta del proyecto este ultimo comando, y el de las dependencias
 
+## Uso
 
+``` Ejecucion
+jacebal_PRDATOS
+```
+
+Las rutas a los archivos de datos son relativas y se han implementado para obtenerlas de forma absoluta al directorio
+activo de la terminal donde se ejecuta el paquete, por tanto, no existen problemas para ejecutarlo desde cualquier
+directorio siempre y cuando Python este puesto en el PATH del sistema operativo, y las imagenes se van a guardar en el
+directorio activo.
+
+# Licencia
+
+- Licencia Creative Commons 1.0: Derecho a usar comercialmenmte, a modificar, distribuir y a uso privado. No hay derecho
+  a uso como marca, a patentar ni se ofrece ningun tipo de garantia ni responsabilidad. Para mas informacion mirar el
+  archivo de LICENSE.
