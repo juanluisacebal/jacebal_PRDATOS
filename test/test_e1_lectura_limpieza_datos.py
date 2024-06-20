@@ -6,8 +6,10 @@ from src.e1_lectura_limpieza_datos import read_csv, clean_csv, rename_col
 
 class TestLecturaLimpiezaDatos(unittest.TestCase):
     @classmethod
-    def setUp(cls):
-        """ Uso setUp para algunos casos de prueba """
+    def setUpClass(cls):
+        """
+            Uso setUpClass para algunos casos de prueba
+        """
         print("Loading dataset")
         cls._df = pd.read_csv("../data/nics-firearm-background-checks.csv")
         cls._df2 = pd.read_csv("../data/us-state-populations.csv")
@@ -33,7 +35,9 @@ class TestLecturaLimpiezaDatos(unittest.TestCase):
         self.assertFalse(self._df2.empty)
 
     def test_clean_csv(self):
-        """ Verifica que limpia bien el csv y elimina las columnas que debe """
+        """
+            Verifica que limpia bien el csv y elimina las columnas que debe
+        """
         df = pd.DataFrame({
             'month': ['2010-01'], 'state': ['Texas'], 'permit': [0], 'handgun': [0],
             'long_gun': [0], 'other': [0]
@@ -48,7 +52,9 @@ class TestLecturaLimpiezaDatos(unittest.TestCase):
         self.assertNotIn(not columnas, df_c.columns)
 
     def test_rename_col(self):
-        """ Verifica que cambia bien el nombre de la columna longgun cuando existe """
+        """
+            Verifica que cambia bien el nombre de la columna longgun cuando existe
+        """
         df = pd.DataFrame({
             'longgun': [123], 'month': [12]
         })

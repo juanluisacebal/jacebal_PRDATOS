@@ -1,26 +1,36 @@
 import unittest
+import os
 import pandas as pd
 from main import main
 from src.e1_lectura_limpieza_datos import rename_col, clean_csv
 from src.e2_procesamiento_datos import erase_month, breakdown_date
 from src.e3_agrupamiento_datos import groupby_state_and_year
-from src.e5_analisis_datos_estados import merge_datasets, calculate_relative_values, arreglar_Kentucky, clean_states, \
+from src.e5_analisis_datos_estados import merge_datasets, calculate_relative_values, arreglar_kentucky, clean_states, \
     groupby_state
 
 
 class TestMain(unittest.TestCase):
     def test_main(self):
-        """ Verifica que main se ejecuta sin dar excepciones """
+        """
+            Verifica que main se ejecuta sin dar excepciones
+        """
         try:
             main()
         except Exception as e:
             self.fail(f"main() raised an exception {e}")
+        os.remove('permit_perc.png')
+        os.remove('long_gun_perc.png')
+        os.remove('handgun_perc.png')
+        os.remove('mapa.html')
 
 
 class TestProcesamientoDatosCompleto(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        """ Hace todas las transformaciones que hace main()"""
+        """
+            Hace todas las transformaciones que hace main()
+            Sobre los datos, no incluye graficos (enunciado 4)
+        """
         # Cargo datos de los CSV
         cls.df = pd.read_csv("../data/nics-firearm-background-checks.csv")
         cls.df_pop = pd.read_csv("../data/us-state-populations.csv")
@@ -37,10 +47,12 @@ class TestProcesamientoDatosCompleto(unittest.TestCase):
         # merge con df_pop tal y como esta en main.py
         cls.df_fusion = merge_datasets(cls.df, cls.df_pop)
         cls.df_fusion = calculate_relative_values(cls.df_fusion)
-        cls.df_fusion = arreglar_Kentucky(cls.df_fusion)
+        cls.df_fusion = arreglar_kentucky(cls.df_fusion)
 
     def test_dataframe_final(self):
-        """ Verifica que algunos datos coinciden con lo esperado"""
+        """
+            Verifica que algunos datos coinciden con lo esperado
+        """
         self.assertFalse(self.df_fusion.empty)
         self.assertIsNotNone(self.df_fusion)
         # Comparo unos registros

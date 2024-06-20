@@ -5,7 +5,9 @@ import pandas as pd
 
 class TestAgrupamientoDatos(unittest.TestCase):
     def test_groupby_state_and_year(self):
-        """ Verifica que agrupa por state y year """
+        """
+            Verifica que agrupa por state y year
+        """
         df = pd.DataFrame([
             {'year': '2012', 'state': 'Florida', 'permit': 30, 'handgun': 26750, 'long_gun': 110},
             {'year': '2013', 'state': 'Texas', 'permit': 40, 'handgun': 4560, 'long_gun': 4120},
@@ -36,7 +38,9 @@ class TestAgrupamientoDatos(unittest.TestCase):
         self.assertEqual(florida_2012['permit'].iloc[0], 30)
 
     def test_print_biggest_handguns(self):
-        """ Verifica que el mensaje salido en la terminal es el esperado para pistolas"""
+        """
+            Verifica que el mensaje salido en la terminal es el esperado para pistolas
+        """
         df = pd.DataFrame([
             {'year': '2012', 'state': 'Florida', 'permit': 30, 'handgun': 26750, 'long_gun': 110},
             {'year': '2013', 'state': 'Texas', 'permit': 40, 'handgun': 4560, 'long_gun': 4120}
@@ -46,7 +50,9 @@ class TestAgrupamientoDatos(unittest.TestCase):
                          print_biggest_handguns(df))
 
     def test_print_biggest_longguns(self):
-        """ Verifica que el mensaje salido en la terminal es el esperado para armas largas"""
+        """
+            Verifica que el mensaje salido en la terminal es el esperado para armas largas
+        """
         df = pd.DataFrame([
             {'year': '2012', 'state': 'Florida', 'permit': 30, 'handgun': 20, 'long_gun': 110},
             {'year': '2013', 'state': 'Texas', 'permit': 40, 'handgun': 30, 'long_gun': 4120}

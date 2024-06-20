@@ -69,7 +69,7 @@ def calculate_relative_values(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def arreglar_Kentucky(df: pd.DataFrame) -> pd.DataFrame:
+def arreglar_kentucky(df: pd.DataFrame) -> pd.DataFrame:
     """
       Arregla valor Kentucky principalmente. Muestra la media,
       sustituye la media en permit_perc en Kentucky, y luego muestra

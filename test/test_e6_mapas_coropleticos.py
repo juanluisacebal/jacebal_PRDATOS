@@ -2,23 +2,28 @@ import os
 import unittest
 import folium
 import pandas as pd
-
 from src.e6_mapas_coropleticos import crear_capa_coropletica, hacer_todo_mapas, crear_y_guardar_mapa_html
 
 
 class TestMapasCoropleticos(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        """
+            Uso este metodo de clase para tener un df y la url disponible para el resto de metodos
+        """
         cls.df = pd.DataFrame({
-            'code': ['TX', 'CA'],
+            'code': ['Texas', 'Florida'],
             'permit_perc': [1000, 1500],
             'handgun_perc': [2000, 3000],
             'long_gun_perc': [1500, 2500]
         })
-        cls.geojson_url = "https://raw.githubusercontent.com/python-visualization/folium/main/examples/data/us-states.json"
+        cls.geojson_url = ("https://raw.githubusercontent.com/"
+                           "python-visualization/folium/main/examples/data/us-states.json")
 
     def test_crear_capa_coropletica(self):
-        # Probar la existencia de una capa coroplética
+        """
+            Verifica la existencia de una capa corocletica, objeto de tipo folium.Choropleth
+        """
         capa = crear_capa_coropletica(
             df=self.df,
             columna='permit_perc',
@@ -31,6 +36,10 @@ class TestMapasCoropleticos(unittest.TestCase):
         self.assertIsInstance(capa, folium.Choropleth)
 
     def test_crear_y_guardar_mapa_html(self):
+        """
+            Verifica que se crea el mapa html (donde hay diferentes capas en el)
+            Sin crear las imagenes PNG
+        """
         capa1 = crear_capa_coropletica(self.df,
                                        'permit_perc',
                                        'code',
@@ -61,6 +70,9 @@ class TestMapasCoropleticos(unittest.TestCase):
         os.remove(archivo_salida)
 
     def test_hacer_todo_mapas(self):
+        """
+            Verifica que se han creado los mapas, y luego los elimina
+        """
         hacer_todo_mapas(self.df)
         # Sabiendo que hacer_todo_mapas guarda un archivo llamado 'mapa.html' y 3 imagenes png
         self.assertTrue(os.path.exists('mapa.html'))
@@ -75,8 +87,9 @@ class TestMapasCoropleticos(unittest.TestCase):
         os.remove('mapa.html')
 
 
-# En el caso de querer ejecutar solo este modulo:
 if __name__ == '__main__':
+    """ 
+        n el caso de querer ejecutar solo este modulo.
+    """
     import unittest
-
     unittest.main()
