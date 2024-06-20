@@ -115,6 +115,20 @@ Estando dentro de la carpeta del proyecto este ultimo comando, y el de las depen
 jacebal_PRDATOS
 ```
 
+## Test unitarios
+
+Ejecucion de todos los tests
+
+```bash
+python -m unittest discover -s test
+```
+
+Ejecución de un test específico
+
+``` bash
+python -m unittest test.test_e1_lectura_limpieza_datos.TestLecturaLimpiezaDatos.test_read_csv
+``` 
+
 Las rutas a los archivos de datos son relativas y se han implementado para obtenerlas de forma absoluta al directorio
 activo de la terminal donde se ejecuta el paquete, por tanto, no existen problemas para ejecutarlo desde cualquier
 directorio siempre y cuando Python este puesto en el PATH del sistema operativo, y las imagenes se van a guardar en el
@@ -125,3 +139,5 @@ directorio activo.
 - Licencia Creative Commons 1.0: Derecho a usar comercialmenmte, a modificar, distribuir y a uso privado. No hay derecho
   a uso como marca, a patentar ni se ofrece ningun tipo de garantia ni responsabilidad. Para mas informacion mirar el
   archivo de LICENSE.
+- Debido a que esta en fase de evaluacion de la asignatura, una vez evaluada, dispondre publico el repositorio para
+  compartirlo bajo licencia CC 1.0
