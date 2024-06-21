@@ -80,7 +80,8 @@ Archivo y funcion principal del proyecto que ejecuta todos los modulos:
 
 Para instalar las dependencias necesarias, tienes el documento dentro del proyecto, lo tienes que usar tanto uses un
 entorno virtual como si usas el que tengas instalado (no recomendado).
-usa
+
+Usa
 
 ```bash
 pip3 install -r requirements.txt
