@@ -1,8 +1,11 @@
 import os
 import unittest
+
 import folium
 import pandas as pd
-from src.e6_mapas_coropleticos import crear_capa_coropletica, hacer_todo_mapas, crear_y_guardar_mapa_html
+
+from jacebal_PRDATOS.src.e6_mapas_coropleticos import crear_capa_coropletica, hacer_todo_mapas, \
+    crear_y_guardar_mapa_html
 
 
 class TestMapasCoropleticos(unittest.TestCase):
@@ -92,4 +95,5 @@ if __name__ == '__main__':
         n el caso de querer ejecutar solo este modulo.
     """
     import unittest
+
     unittest.main()

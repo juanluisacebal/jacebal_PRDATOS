@@ -1,6 +1,9 @@
 import unittest
+
 import pandas as pd
-from src.e5_analisis_datos_estados import arreglar_kentucky, clean_states, calculate_relative_values, merge_datasets, \
+
+from jacebal_PRDATOS.src.e5_analisis_datos_estados import arreglar_kentucky, clean_states, calculate_relative_values, \
+    merge_datasets, \
     groupby_state
 
 

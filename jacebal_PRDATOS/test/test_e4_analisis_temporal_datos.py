@@ -1,6 +1,8 @@
 import unittest
+
 import pandas as pd
-from src.e4_analisis_temporal_datos import time_evolution
+
+from jacebal_PRDATOS.src.e4_analisis_temporal_datos import time_evolution
 
 
 class TestAnalisisTemporalDatos(unittest.TestCase):

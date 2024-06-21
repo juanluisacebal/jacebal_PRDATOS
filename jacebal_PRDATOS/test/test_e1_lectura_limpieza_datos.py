@@ -1,7 +1,9 @@
-import unittest
-import pandas as pd
 import os
-from src.e1_lectura_limpieza_datos import read_csv, clean_csv, rename_col
+import unittest
+
+import pandas as pd
+
+from jacebal_PRDATOS.src.e1_lectura_limpieza_datos import read_csv, clean_csv, rename_col
 
 
 class TestLecturaLimpiezaDatos(unittest.TestCase):
@@ -10,9 +12,11 @@ class TestLecturaLimpiezaDatos(unittest.TestCase):
         """
             Uso setUpClass para algunos casos de prueba
         """
-        print("Loading dataset")
-        cls._df = pd.read_csv("../data/nics-firearm-background-checks.csv")
-        cls._df2 = pd.read_csv("../data/us-state-populations.csv")
+        dir_padre = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        path_datos: str = os.path.join(dir_padre, 'data', 'nics-firearm-background-checks.csv')
+        path_datos2: str = os.path.join(dir_padre, 'data', 'us-state-populations.csv')
+        cls._df = read_csv(path_datos)
+        cls._df2 = read_csv(path_datos2)
 
     def test_read_csv(self):
         """

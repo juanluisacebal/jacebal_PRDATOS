@@ -1,11 +1,14 @@
+import importlib.resources as pkg_resources
 import os
-from src.e1_lectura_limpieza_datos import read_csv, clean_csv, rename_col
-from src.e2_procesamiento_datos import breakdown_date, erase_month
-from src.e3_agrupamiento_datos import groupby_state_and_year, print_biggest_handguns, print_biggest_longguns
-from src.e4_analisis_temporal_datos import time_evolution
-from src.e5_analisis_datos_estados import groupby_state, clean_states, merge_datasets, calculate_relative_values, \
-    arreglar_kentucky
-from src.e6_mapas_coropleticos import hacer_todo_mapas
+
+from jacebal_PRDATOS.src.e1_lectura_limpieza_datos import read_csv, clean_csv, rename_col
+from jacebal_PRDATOS.src.e2_procesamiento_datos import breakdown_date, erase_month
+from jacebal_PRDATOS.src.e3_agrupamiento_datos import (groupby_state_and_year, print_biggest_handguns,
+                                                       print_biggest_longguns)
+from jacebal_PRDATOS.src.e4_analisis_temporal_datos import time_evolution
+from jacebal_PRDATOS.src.e5_analisis_datos_estados import (groupby_state, clean_states, merge_datasets,
+                                                           calculate_relative_values, arreglar_kentucky)
+from jacebal_PRDATOS.src.e6_mapas_coropleticos import hacer_todo_mapas
 
 
 def main():
@@ -16,7 +19,9 @@ def main():
     """
     directorio_actual = os.path.dirname(os.path.abspath(__file__))
     archivo_datos = os.path.join(directorio_actual, 'data', 'nics-firearm-background-checks.csv')
-
+    # with pkg_resources.open_text('data', 'nics-firearm-background-checks.csv') as f:
+    #    archivo_datos = f.read()
+    # archivo_datos = pkg_resources.resource_filename('jacebal_PRDATOS', 'data/nics-firearm-background-checks.csv')
     df = read_csv(archivo_datos)
 
     df.hist()

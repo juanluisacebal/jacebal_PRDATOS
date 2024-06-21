@@ -1,4 +1,5 @@
 import io
+
 import folium
 import pandas as pd
 from PIL import Image

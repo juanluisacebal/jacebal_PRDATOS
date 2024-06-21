@@ -1,2 +1,2 @@
 [console_scripts]
-jacebal_PRDATOS = main:main
+jacebal_PRDATOS = jacebal_PRDATOS.main:main

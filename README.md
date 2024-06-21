@@ -104,10 +104,20 @@ source mi_virtualenv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-``` Instalar paquete jacebal_PRDATOS
+``` Instalar paquete jacebal_PRDATOS modo editable (enlace simbolico a la carpeta del proyecto)
 pip3 install -e .
 ```
+
+``` Instalar paquete jacebal_PRDATOS copiandolo
+pip3 install .
+```
+
+``` Instalar paquete jacebal_PRDATOS con la distribucion
+pip3 install jacebal_prdatos-0.0.1.tar.gz
+```
+
 Estando dentro de la carpeta del proyecto este ultimo comando, y el de las dependencias
+
 
 ## Uso
 
@@ -120,13 +130,16 @@ jacebal_PRDATOS
 Ejecucion de todos los tests
 
 ```bash
-python -m unittest discover -s test
+python -m unittest test.test_main
 ```
 
 Ejecución de un test específico
 
 ``` bash
 python -m unittest test.test_e1_lectura_limpieza_datos.TestLecturaLimpiezaDatos.test_read_csv
+python -m unittest test.test_e1_lectura_limpieza_datos.TestLecturaLimpiezaDatos.test_clean_csv
+python -m unittest test.test_e1_lectura_limpieza_datos.TestLecturaLimpiezaDatos.test_rename_col
+....
 ``` 
 
 Las rutas a los archivos de datos son relativas y se han implementado para obtenerlas de forma absoluta al directorio

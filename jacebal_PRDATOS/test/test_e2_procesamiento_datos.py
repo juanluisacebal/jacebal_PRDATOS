@@ -1,7 +1,10 @@
+import os
 import unittest
-import pandas as pd
 
-from src.e2_procesamiento_datos import breakdown_date, erase_month
+import pandas as pd
+from pandas import read_csv
+
+from jacebal_PRDATOS.src.e2_procesamiento_datos import breakdown_date, erase_month
 
 
 class TestProcesamientoDatos(unittest.TestCase):
@@ -10,8 +13,11 @@ class TestProcesamientoDatos(unittest.TestCase):
         """
             Uso este metodo de clase para tener los dos df disponible para el resto de metodos
         """
-        cls._df = pd.read_csv("../data/nics-firearm-background-checks.csv")
-        cls._df2 = pd.read_csv("../data/us-state-populations.csv")
+        dir_padre = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        path_datos: str = os.path.join(dir_padre, 'data', 'nics-firearm-background-checks.csv')
+        path_datos2: str = os.path.join(dir_padre, 'data', 'us-state-populations.csv')
+        cls._df = read_csv(path_datos)
+        cls._df2 = read_csv(path_datos2)
 
     def test_breakdown_date(self):
         """

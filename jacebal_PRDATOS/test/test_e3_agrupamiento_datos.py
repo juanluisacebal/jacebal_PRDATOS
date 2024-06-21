@@ -1,6 +1,8 @@
 import unittest
-from src.e3_agrupamiento_datos import print_biggest_handguns, print_biggest_longguns, groupby_state_and_year
+
 import pandas as pd
+
+from jacebal_PRDATOS.src import print_biggest_handguns, print_biggest_longguns, groupby_state_and_year
 
 
 class TestAgrupamientoDatos(unittest.TestCase):

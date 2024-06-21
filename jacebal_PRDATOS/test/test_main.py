@@ -1,11 +1,14 @@
-import unittest
 import os
+import unittest
+
 import pandas as pd
-from main import main
-from src.e1_lectura_limpieza_datos import rename_col, clean_csv
-from src.e2_procesamiento_datos import erase_month, breakdown_date
-from src.e3_agrupamiento_datos import groupby_state_and_year
-from src.e5_analisis_datos_estados import merge_datasets, calculate_relative_values, arreglar_kentucky, clean_states, \
+
+from jacebal_PRDATOS.main import main
+from jacebal_PRDATOS.src.e1_lectura_limpieza_datos import rename_col, clean_csv, read_csv
+from jacebal_PRDATOS.src.e2_procesamiento_datos import erase_month, breakdown_date
+from jacebal_PRDATOS.src import groupby_state_and_year
+from jacebal_PRDATOS.src.e5_analisis_datos_estados import merge_datasets, calculate_relative_values, arreglar_kentucky, \
+    clean_states, \
     groupby_state
 
 
@@ -32,8 +35,12 @@ class TestProcesamientoDatosCompleto(unittest.TestCase):
             Sobre los datos, no incluye graficos (enunciado 4)
         """
         # Cargo datos de los CSV
-        cls.df = pd.read_csv("../data/nics-firearm-background-checks.csv")
-        cls.df_pop = pd.read_csv("../data/us-state-populations.csv")
+        # Uso 2 veces dirname para ir de test a jacebal_PRDATOS (como hacer 2 veces cd.. )
+        dir_test = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        path_datos: str = os.path.join(dir_test, 'data', 'nics-firearm-background-checks.csv')
+        path_datos_pop: str = os.path.join(dir_test, 'data', 'us-state-populations.csv')
+        cls.df = read_csv(path_datos)
+        cls.df_pop = read_csv(path_datos_pop)
 
         # Hago todas las modificaciones del df en main.py
         cls.df = clean_csv(cls.df)
