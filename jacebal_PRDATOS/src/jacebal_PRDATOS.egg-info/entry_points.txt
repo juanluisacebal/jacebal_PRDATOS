@@ -1,2 +1,0 @@
-[console_scripts]
-jacebal_PRDATOS = main:main
