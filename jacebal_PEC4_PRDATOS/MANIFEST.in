@@ -1,5 +1,0 @@
-include requirements.txt
-include LICENSE
-include README.md
-recursive-include jacebal_PRDATOS/data *
-recursive-include data *.csv
