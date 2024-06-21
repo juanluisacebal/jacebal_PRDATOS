@@ -1,51 +1,3 @@
-Metadata-Version: 2.1
-Name: jacebal_PRDATOS
-Version: 0.0.1
-Summary: Paquete de PEC4 de programacion para la ciencia de datos.
-Home-page: juanluisacebal.com
-Author: Juan Luis Acebal Rico
-Author-email: data@juanluisacebal.com
-Requires-Python: >=3.6
-Description-Content-Type: text/markdown
-License-File: LICENSE
-Requires-Dist: attrs==23.2.0
-Requires-Dist: branca==0.7.2
-Requires-Dist: certifi==2024.6.2
-Requires-Dist: charset-normalizer==3.3.2
-Requires-Dist: contourpy==1.2.1
-Requires-Dist: cycler==0.12.1
-Requires-Dist: folium==0.17.0
-Requires-Dist: fonttools==4.53.0
-Requires-Dist: h11==0.14.0
-Requires-Dist: idna==3.7
-Requires-Dist: Jinja2==3.1.4
-Requires-Dist: kiwisolver==1.4.5
-Requires-Dist: MarkupSafe==2.1.5
-Requires-Dist: matplotlib==3.9.0
-Requires-Dist: mpld3==0.5.10
-Requires-Dist: numpy==2.0.0
-Requires-Dist: outcome==1.3.0.post0
-Requires-Dist: packaging==24.1
-Requires-Dist: pandas==2.2.2
-Requires-Dist: pillow==10.3.0
-Requires-Dist: pyparsing==3.1.2
-Requires-Dist: PySocks==1.7.1
-Requires-Dist: python-dateutil==2.9.0.post0
-Requires-Dist: pytz==2024.1
-Requires-Dist: requests==2.32.3
-Requires-Dist: selenium==4.21.0
-Requires-Dist: setuptools==70.0.0
-Requires-Dist: six==1.16.0
-Requires-Dist: sniffio==1.3.1
-Requires-Dist: sortedcontainers==2.4.0
-Requires-Dist: trio==0.25.1
-Requires-Dist: trio-websocket==0.11.1
-Requires-Dist: typing_extensions==4.12.2
-Requires-Dist: tzdata==2024.1
-Requires-Dist: urllib3==2.2.2
-Requires-Dist: wsproto==1.2.0
-Requires-Dist: xyzservices==2024.6.0
-
 # jacebal_PRDATOS
 
 # Proyecto de Visualización de datos
@@ -91,8 +43,8 @@ Archivo y funcion principal del proyecto que ejecuta todos los modulos:
     - `merge_datasets()`:Fusiona el dataset de armas con el dataset de poblacion.
     - `calculate_relative_values()`: Crea 3 nuevas metricas en el dataset de armas largas, cortas y permisos cada 100000
       habitantes.
-  - `arreglar_Kentucky()`:Arregla los datos sobre permisos de armas de Kentucky, ya que es outlier y puede generar
-    falsas conclusiones. Lo sustituye por la media del dataset.
+    - `arreglar_Kentucky()`:Arregla los datos sobre permisos de armas de Kentucky, ya que es outlier y puede generar
+      falsas conclusiones. Lo sustituye por la media del dataset.
 
 - `e6_mapas_coropleticos.py`:
     - `crear_capa_coropletica()`: Genera capas coropléticas para visualizar los datos geográficamente y genera el mapa
@@ -102,7 +54,6 @@ Archivo y funcion principal del proyecto que ejecuta todos los modulos:
       crear_y_guardar_mapa_html.
 
 - `__init__.py`: Definicion como modulo de carpeta src (vacio).
-
 
 ### Directorio `data/`:
 
@@ -159,6 +110,7 @@ pip3 install -e .
 ``` Instalar paquete jacebal_PRDATOS copiandolo
 pip3 install .
 ```
+
 Estando dentro de la carpeta del proyecto este ultimo comando, y el de las dependencias
 
 ``` Instalar paquete jacebal_PRDATOS con la distribucion de tipo sdist
@@ -168,8 +120,6 @@ pip3 install jacebal_prdatos-0.0.1.tar.gz
 ``` Instalar paquete jacebal_PRDATOS con la distribucion de tipo wheel (.whl) binaria
 pip3 install jacebal_PRDATOS-0.0.1-py3-none-any.whl
 ```
-
-
 
 ## Uso
 

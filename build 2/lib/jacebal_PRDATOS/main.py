@@ -25,13 +25,13 @@ def main():
     # print(df.head(), "\n")
     df = breakdown_date(df)
     df = erase_month(df)
-    #print(df[df['year'] == 2020].head())
+    # print(df[df['year'] == 2020].head())
     df = groupby_state_and_year(df)
-    #print(df[df['year'] == 2020].head())
+    # print(df[df['year'] == 2020].head())
     print_biggest_handguns(df)
     print_biggest_longguns(df)
     time_evolution(df)
-    #print(df[['long_gun']].sum(axis=0))
+    # print(df[['long_gun']].sum(axis=0))
     '''
     Comentario del grafico:
         muestra la evolucion a largo plazo de ventas y permisos de armas.Se ve como desde 1998 se
@@ -49,9 +49,9 @@ def main():
     df = clean_states(df)
     df.info()
     df_m = merge_datasets(df, df2)
-    #print(df_m)
+    # print(df_m)
     df_m = calculate_relative_values(df_m)
-    #print(df_m.sort_values(by=['permit_perc'], ascending=False).head(), '\n\n')
+    # print(df_m.sort_values(by=['permit_perc'], ascending=False).head(), '\n\n')
     df_m = arreglar_kentucky(df_m)
     hacer_todo_mapas(df_m)
 

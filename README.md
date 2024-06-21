@@ -111,13 +111,15 @@ pip3 install -e .
 ``` Instalar paquete jacebal_PRDATOS copiandolo
 pip3 install .
 ```
+Estando dentro de la carpeta del proyecto este ultimo comando, y el de las dependencias
 
-``` Instalar paquete jacebal_PRDATOS con la distribucion
+``` Instalar paquete jacebal_PRDATOS con la distribucion de tipo sdist
 pip3 install jacebal_prdatos-0.0.1.tar.gz
 ```
 
-Estando dentro de la carpeta del proyecto este ultimo comando, y el de las dependencias
-
+``` Instalar paquete jacebal_PRDATOS con la distribucion de tipo wheel (.whl) binaria
+pip3 install jacebal_PRDATOS-0.0.1-py3-none-any.whl
+```
 
 ## Uso
 
@@ -127,10 +129,16 @@ jacebal_PRDATOS
 
 ## Test unitarios
 
+Ejecucion de la ruta de instalacion dentro de virtualenv (cd mi_virtualenv/lib/python3.11/site-packages/jacebal_PRDATOS)
+
+```bash en la ruta
+python -m unittest 
+```
+
 Ejecucion de todos los tests
 
 ```bash
-python -m unittest test.test_main
+python -m unittest test
 ```
 
 Ejecución de un test específico

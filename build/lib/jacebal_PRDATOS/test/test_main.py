@@ -6,7 +6,7 @@ import pandas as pd
 from jacebal_PRDATOS.main import main
 from jacebal_PRDATOS.src.e1_lectura_limpieza_datos import rename_col, clean_csv, read_csv
 from jacebal_PRDATOS.src.e2_procesamiento_datos import erase_month, breakdown_date
-from jacebal_PRDATOS.src import groupby_state_and_year
+from jacebal_PRDATOS.src.e3_agrupamiento_datos import groupby_state_and_year
 from jacebal_PRDATOS.src.e5_analisis_datos_estados import merge_datasets, calculate_relative_values, arreglar_kentucky, \
     clean_states, \
     groupby_state

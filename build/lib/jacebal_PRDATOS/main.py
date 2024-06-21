@@ -19,26 +19,19 @@ def main():
     """
     directorio_actual = os.path.dirname(os.path.abspath(__file__))
     archivo_datos = os.path.join(directorio_actual, 'data', 'nics-firearm-background-checks.csv')
-    # with pkg_resources.open_text('data', 'nics-firearm-background-checks.csv') as f:
-    #    archivo_datos = f.read()
-    # archivo_datos = pkg_resources.resource_filename('jacebal_PRDATOS', 'data/nics-firearm-background-checks.csv')
     df = read_csv(archivo_datos)
-
-    df.hist()
     df = clean_csv(df)
     df = rename_col(df)
-    df.hist()
-    print("parte 2\n")
-    print(df.head(), "\n")
+    # print(df.head(), "\n")
     df = breakdown_date(df)
     df = erase_month(df)
-    print(df[df['year'] == 2020].head())
+    #print(df[df['year'] == 2020].head())
     df = groupby_state_and_year(df)
-    print(df[df['year'] == 2020].head())
+    #print(df[df['year'] == 2020].head())
     print_biggest_handguns(df)
     print_biggest_longguns(df)
     time_evolution(df)
-    print(df[['long_gun']].sum(axis=0))
+    #print(df[['long_gun']].sum(axis=0))
     '''
     Comentario del grafico:
         muestra la evolucion a largo plazo de ventas y permisos de armas.Se ve como desde 1998 se
@@ -56,9 +49,9 @@ def main():
     df = clean_states(df)
     df.info()
     df_m = merge_datasets(df, df2)
-    print(df_m)
+    #print(df_m)
     df_m = calculate_relative_values(df_m)
-    print(df_m.sort_values(by=['permit_perc'], ascending=False).head(), '\n\n')
+    #print(df_m.sort_values(by=['permit_perc'], ascending=False).head(), '\n\n')
     df_m = arreglar_kentucky(df_m)
     hacer_todo_mapas(df_m)
 
